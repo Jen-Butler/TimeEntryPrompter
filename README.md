@@ -33,7 +33,7 @@
    Once the webhook is established, enter it when prompted. This enables data submissions to the specified endpoint.
 
 5. **Run at Startup**:
-   Select the "Run at startup" option within the application to ensure it launches automatically every time the computer restarts.
+   Install the app using the `timeentrypromptersetup.exe` file in the `Resources/Output` folder. You can also use Inno Setup to create an installer for the app (see `Resources/inno_setup.iss` for script). Select the "Run at startup" option within the application to ensure it launches automatically every time the computer restarts.
 
 ## Usage Notes
 
@@ -51,6 +51,14 @@
 ![TimeEntryPrompter UI](screenshot.png)
 
 This screenshot shows the main interface of the `TimeEntryPrompter` application, where users can input start and end times, notes, and ticket numbers/work types.
+
+---
+
+### Resources
+- [Rewst Workflow](Resources/Rewst%20Time%20Entry%20Prompter.json)
+- [Inno Setup Script](Resources/inno_setup.iss)
+- [Installer](Resources/Output/timeentrypromptersetup.exe)
+- [Inno Setup Compiler](https://www.jrsoftware.org/isdl.php)
 
 ---
 
