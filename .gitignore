@@ -1,0 +1,7 @@
+.env
+
+/bin
+/obj
+
+TimeEntryForm.cs.old
+TimeEntryForm.Designer.cs.old
