@@ -33,7 +33,7 @@
    Once the webhook is established, enter it when prompted. This enables data submissions to the specified endpoint.
 
 5. **Run at Startup**:
-   Install the app using the `timeentrypromptersetup.exe` file in the `Resources/Output` folder. You can also use Inno Setup to create an installer for the app (see `Resources/inno_setup.iss` for the, script and make sure to edit the Source under [Files] to point to the correct location of the application). Select the "Run at startup" option within the application to ensure it launches automatically every time the computer restarts.
+   Install the app using the `timeentrypromptersetup.exe` file in the `Resources/Output` folder. You can also use Inno Setup to create an installer for the app (see `Resources/inno_setup.iss` for the script, and make sure to edit the Source under [Files] to point to the correct location of the application). Select the "Run at startup" option within the application to ensure it launches automatically every time the computer restarts.
 
 ## Usage Notes
 
