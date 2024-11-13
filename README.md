@@ -55,7 +55,7 @@ This screenshot shows the main interface of the `TimeEntryPrompter` application,
 ---
 
 ### Resources
-- [Rewst Workflow](Resources/workflow-018da325-a5ca-7755-9e8d-02f7d84b997c_20241112_174239.bundle.json)
+- [Rewst Workflow](Resources/workflow-018da325-a5ca-7755-9e8d-02f7d84b997c_20241113_140550.bundle.json)
 - [Inno Setup Script](Resources/inno_setup.iss)
 - [Installer](Resources/Output/timeentrypromptersetup.exe)
 - [Inno Setup Compiler](https://www.jrsoftware.org/isdl.php)
