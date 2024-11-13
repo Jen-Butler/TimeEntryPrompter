@@ -19,6 +19,7 @@ namespace TimeEntryPrompter
 
         private const string RegistryPath = @"Software\TimeEntryPrompter";
         private const string PostUrlKey = "POST_URL";
+        private const string UsernameKey = "USERNAME";
 
         private NotifyIcon trayIcon = null!;
         private ContextMenuStrip trayMenu = null!;
@@ -34,6 +35,7 @@ namespace TimeEntryPrompter
             InitializeTrayIcon();
 
             InitializeStartupCheckbox(); // Initialize the startup checkbox state
+            LoadUsername(); // Load saved username from registry
 
             Timer_Tick(null, EventArgs.Empty);
             
@@ -93,6 +95,46 @@ namespace TimeEntryPrompter
             {
                 MessageBox.Show($"Error accessing registry to determine startup setting: {ex.Message}");
                 startupCheckbox.Checked = false;
+            }
+        }
+
+        private void LoadUsername()
+        {
+            try
+            {
+                using (RegistryKey? rk = Registry.CurrentUser.OpenSubKey(RegistryPath, writable: false))
+                {
+                    if (rk != null)
+                    {
+                        string? savedUsername = rk.GetValue(UsernameKey) as string;
+                        if (!string.IsNullOrEmpty(savedUsername))
+                        {
+                            usernameTextBox.Text = savedUsername;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error reading username from registry: {ex.Message}");
+            }
+        }
+
+        private void SaveUsername()
+        {
+            try
+            {
+                using (RegistryKey? rk = Registry.CurrentUser.CreateSubKey(RegistryPath))
+                {
+                    if (rk != null)
+                    {
+                        rk.SetValue(UsernameKey, usernameTextBox.Text.Trim(), RegistryValueKind.String);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving username to registry: {ex.Message}");
             }
         }
 
@@ -169,6 +211,13 @@ namespace TimeEntryPrompter
                     this.WindowState = FormWindowState.Normal;
                     trayIcon.Visible = false;
                 }
+            }
+            else
+            {
+                // Outside of 8 AM to 5 PM
+                // Do not show the popup or error, allow normal usage
+                // Optionally, you can disable certain functionalities if needed
+                // For now, we'll leave it as is to allow users to use the application without interruptions
             }
         }
 
@@ -334,6 +383,8 @@ namespace TimeEntryPrompter
                 ShowBalloonTip("Time Entry Prompter minimized to tray.");
 
                 lastEntryTime = endTime; // Update the last entry time to the end time of the current entry
+
+                SaveUsername(); // Save the username to the registry
             }
             catch (Exception ex)
             {
