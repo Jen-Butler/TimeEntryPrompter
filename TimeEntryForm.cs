@@ -202,8 +202,19 @@ namespace TimeEntryPrompter
             DateTime now = DateTime.Now;
             if (now.TimeOfDay >= TimeSpan.FromHours(8) && now.TimeOfDay < TimeSpan.FromHours(17))
             {
-                endTimeTextBox.Text = now.ToString("HHmm");
-                startTimeTextBox.Text = now.AddMinutes(-intervalMinutes).ToString("HHmm");
+                if (lastEntryTime.HasValue)
+                {
+                    // Set Start Time to the last saved End Time
+                    startTimeTextBox.Text = lastEntryTime.Value.ToString("HHmm");
+                    // Set End Time to Start Time plus the interval
+                    endTimeTextBox.Text = lastEntryTime.Value.AddMinutes(intervalMinutes).ToString("HHmm");
+                }
+                else
+                {
+                    // Default behavior if there's no last entry
+                    startTimeTextBox.Text = now.AddMinutes(-intervalMinutes).ToString("HHmm");
+                    endTimeTextBox.Text = now.ToString("HHmm");
+                }
 
                 if (!this.Visible)
                 {
@@ -223,7 +234,7 @@ namespace TimeEntryPrompter
 
         /// <summary>
         /// Attempts to parse the input time string into a DateTime object.
-        /// Automatically prepends a '0' if the input is 3 digits.
+        /// Automatically prepends a '0' if the input is 3 digits or handles single/double-digit inputs.
         /// </summary>
         /// <param name="input">The time string input by the user.</param>
         /// <param name="time">The parsed DateTime object.</param>
@@ -233,8 +244,17 @@ namespace TimeEntryPrompter
             time = DateTime.MinValue;
             string normalizedInput = input.Trim();
 
+            // Handle single or double-digit inputs by appending "00" for minutes
+            if (normalizedInput.Length == 1 || normalizedInput.Length == 2)
+            {
+                if (int.TryParse(normalizedInput, out int hour))
+                {
+                    // Assume minutes are "00"
+                    normalizedInput = hour.ToString("00") + "00";
+                }
+            }
             // Prepend '0' if input is 3 digits
-            if (normalizedInput.Length == 3 && normalizedInput.All(char.IsDigit))
+            else if (normalizedInput.Length == 3 && normalizedInput.All(char.IsDigit))
             {
                 normalizedInput = "0" + normalizedInput;
             }

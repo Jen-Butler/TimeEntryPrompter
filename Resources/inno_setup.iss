@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TimeEntryPrompter"
-#define MyAppVersion "1.1"
+#define MyAppVersion "1.2"
 #define MyAppPublisher "Jennifer Butler"
 #define MyAppURL "https://github.com/Jen-Butler/TimeEntryPrompter"
 #define MyAppExeName "TimeEntryPrompter.exe"
