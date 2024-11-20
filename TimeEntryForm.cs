@@ -200,6 +200,14 @@ namespace TimeEntryPrompter
         private void Timer_Tick(object? sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
+
+            // Check if a new day has started compared to the last entry
+            if (lastEntryTime.HasValue && lastEntryTime.Value.Date != now.Date)
+            {
+                // Reset lastEntryTime for the new day
+                lastEntryTime = null;
+            }
+
             if (now.TimeOfDay >= TimeSpan.FromHours(8) && now.TimeOfDay < TimeSpan.FromHours(17))
             {
                 if (lastEntryTime.HasValue)
@@ -211,7 +219,7 @@ namespace TimeEntryPrompter
                 }
                 else
                 {
-                    // Default behavior if there's no last entry
+                    // Default behavior if there's no last entry or it's a new day
                     startTimeTextBox.Text = now.AddMinutes(-intervalMinutes).ToString("HHmm");
                     endTimeTextBox.Text = now.ToString("HHmm");
                 }
@@ -226,9 +234,7 @@ namespace TimeEntryPrompter
             else
             {
                 // Outside of 8 AM to 5 PM
-                // Do not show the popup or error, allow normal usage
-                // Optionally, you can disable certain functionalities if needed
-                // For now, we'll leave it as is to allow users to use the application without interruptions
+                // Optional: Add any specific behavior if needed
             }
         }
 
